@@ -1,4 +1,4 @@
-defmodule Ch06Recursion do
+defmodule Ep06Recursion do
   def sum(list) do
     sum(list, 0)
   end
