@@ -12,6 +12,19 @@ defmodule Ep06Recursion do
     acc
   end
 
+  def reverse(list) do
+    reverse(list, [])
+  end
+
+  defp reverse([h | t], reversed_list) do
+    reversed_list = [h | reversed_list]
+    reverse(t, reversed_list)
+  end
+
+  defp reverse([], reversed_list) do
+    reversed_list
+  end
+
   defp sum([h | t], acc) do
     sum(t, acc + h)
   end
