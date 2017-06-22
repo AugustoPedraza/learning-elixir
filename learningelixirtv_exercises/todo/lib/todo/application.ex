@@ -12,6 +12,7 @@ defmodule Todo.Application do
     children = [
       # Starts a worker by calling: Todo.Worker.start_link(arg1, arg2, arg3)
       # worker(Todo.Worker, [arg1, arg2, arg3]),
+      worker(Todo.Cache, []),
       supervisor(Todo.Server, [])
     ]
 
