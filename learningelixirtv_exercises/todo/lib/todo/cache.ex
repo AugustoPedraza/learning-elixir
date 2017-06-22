@@ -14,6 +14,10 @@ defmodule Todo.Cache do
     end
   end
 
+  def clear do
+    :ets.delete_all_objects(__MODULE__)
+  end
+
   ###
   # GenServer API
   ###
