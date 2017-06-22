@@ -7,6 +7,10 @@ defmodule Todo.ListTest do
   setup do
     {:ok, list} = List.start_link("Home")
 
+    on_exit fn ->
+      Todo.Cache.clear
+    end
+
     {:ok, list: list}
   end
 
