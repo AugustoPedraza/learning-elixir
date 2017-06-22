@@ -21,4 +21,15 @@ defmodule Todo.ListTest do
 
     assert List.items(list) == [item]
   end
+
+  test ".update can mark an item as complete", %{list: list} do
+    item = Item.new("Complete a task")
+    List.add(list, item)
+
+    item = %{item | description: "new", completed: true}
+
+    List.update(list, item)
+
+    assert List.items(list) == [item]
+  end
 end
