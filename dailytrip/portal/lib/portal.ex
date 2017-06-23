@@ -2,6 +2,13 @@ defmodule Portal do
   defstruct [:left, :right]
 
   @doc """
+  Shoots a new door with the give `color`
+  """
+  def shoot(color) do
+    Supervisor.start_child(Portal.Supervisor, [color])
+  end
+
+  @doc """
   Starts transfering `data` from `left` to `right`.
   """
   def transfer(left, right, data) do
@@ -18,8 +25,11 @@ defmodule Portal do
   def push_right(portal) do
     case Portal.Door.pop(portal.left) do
       :error -> :ok
-      {:ok, h} -> Portal.Door.push(portal.right, h)
+      {:ok, h} ->
+        Portal.Door.push(portal.right, h)
     end
+
+    portal
   end
 end
 
