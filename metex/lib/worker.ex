@@ -20,6 +20,11 @@ defmodule Metex.Worker do
     GenServer.cast(pid, :reset_stats)
   end
 
+  def stop(pid) do
+    GenServer.cast(pid, :stop)
+  end
+
+
   ###
   # Server Callbacks
   ###
@@ -43,6 +48,16 @@ defmodule Metex.Worker do
 
   def handle_cast(:reset_stats, _stats) do
     {:noreply, %{}}
+  end
+
+  def handle_cast(:stop, stats) do
+    {:stop, :normal, stats}
+  end
+
+  def terminate(reason, stats) do
+    IO.puts "server terminated because of #{inspect reason}"
+    inspect stats
+    :ok
   end
 
   ###
