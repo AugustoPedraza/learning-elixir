@@ -3,7 +3,8 @@ defmodule Ring do
     1..n |> Enum.map(fn _ -> spawn(fn -> loop() end ) end)
   end
 
-  def link_processes([first_pid, second_pid | pids], linked_processes \\ []) do
+  def link_processes(pids, linked_processes \\ [])
+  def link_processes([first_pid, second_pid | pids], linked_processes) do
     send(first_pid, {:link, second_pid})
 
     link_processes([second_pid | pids], [first_pid | linked_processes])
@@ -25,9 +26,18 @@ defmodule Ring do
 
         loop()
 
+      :trap_exit ->
+        Process.flag(:trap_exit, true)
+
+        loop()
+
       :crash ->
         1/0
+
+      {:EXIT, pid, reason} ->
+        IO.puts "#{inspect self()} received {:EXIT, #{inspect pid}, #{reason}}"
+
+        loop()
     end
   end
-
 end
